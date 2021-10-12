@@ -9,12 +9,12 @@
 % IEEE Transactions on Information Forensics and Security (2018).
 
 
-addpath('/src/') %Add source code to path
-data_path = dir("The file path of the dataset");
+addpath('./src/') %Add source code to path
+data_path = dir("D:\Desktop\สำฦต\New Folder\NI");
 [row, col] = size(data_path)
-result = zeros(col, 6); 
+%result = zeros(col, 6);
 
-for name = 1:row
+for name = 836:row
     %% 0 Parameters 
     HW = 16; %Local LCA measurement window half-width (HW)
     DELTA = 5; %Local LCA measurement maximum displacement
@@ -23,7 +23,9 @@ for name = 1:row
     corner_num = 5000; 
     
     %% 1 Load Image 
-    str = data_path(name, 2) + data_path(name, 1);
+    file_path = string(getfield(data_path,{name}, 'folder'))
+    file_name = string(getfield(data_path,{name}, 'name'))
+    str = file_path + '\' + file_name
     I = imread(str);
 
     %% 2 Select Key Points (Corners)  
@@ -73,8 +75,8 @@ for name = 1:row
      %%
      result(name,:) = [num, locallength , globallength, hmax, hdiff, hvar];
      disp(name);
-     save result.mat result;
-     close all;
-     clear
-     load result.mat;
 end
+
+ save result.mat result;
+ close all;
+ clc
